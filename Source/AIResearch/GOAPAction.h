@@ -7,7 +7,7 @@
 #include "GOAPAction.generated.h"
 
 using FWorldState = TMap<FName, bool>;
-UCLASS()
+UCLASS(Blueprintable)
 class AIRESEARCH_API UGOAPAction : public UObject
 {
 	GENERATED_BODY()
@@ -18,7 +18,6 @@ public:
 	//Functions to override
 	virtual void Start(class AAIController* Controller) {}
 	virtual void Tick(class AAIController* Controller, float DeltaTime) {}
-	virtual bool IsFinished() const { return true; }
 	virtual void Reset() {}
 protected:
 	FWorldState m_Preconditions{};

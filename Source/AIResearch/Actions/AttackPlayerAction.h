@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class AIRESEARCH_API UAttackPlayerAction : public UGOAPAction
 {
 	GENERATED_BODY()

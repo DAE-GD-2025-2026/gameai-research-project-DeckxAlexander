@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable)
 class AIRESEARCH_API USearchAmmoAction : public UGOAPAction
 {
 	GENERATED_BODY()
