@@ -18,8 +18,8 @@ struct FGoapNode
 class ActionPlanner
 {
 public:
-	float Heuristic(const FWorldState& state, const FWorldState& goal);
-	bool HasReachedGoal(const FWorldState& state, const FWorldState& goal);
-	TArray<UGOAPAction*> PlanAStar(const FWorldState& start, const FWorldState& goal, const TArray<UGOAPAction*>& possibleActions);
+	static float Heuristic(const FWorldState& state, const FWorldState& goal) ;
+	static bool HasReachedGoal(const FWorldState& state, const FWorldState& goal) ;
+	static TArray<UGOAPAction*> PlanAStar(const FWorldState& start, const FWorldState& goal, const TArray<UGOAPAction*>& possibleActions);
 	
 };

@@ -14,7 +14,7 @@ class AIRESEARCH_API UGOAPAction : public UObject
 public:
 	bool IsApplicable(const FWorldState& State) const;
 	void Apply(FWorldState& State) const;
-	
+	float GetCost() const {return m_Cost;}
 	//Functions to override
 	virtual void Start(class AAIController* Controller) {}
 	virtual void Tick(class AAIController* Controller, float DeltaTime) {}
@@ -23,6 +23,7 @@ public:
 protected:
 	FWorldState m_Preconditions;
 	FWorldState m_Effects;
+	float m_Cost{1.f};
 	
 	
 	

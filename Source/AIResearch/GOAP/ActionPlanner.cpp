@@ -1,7 +1,7 @@
-﻿#include "C:\Users\alexa\Desktop\gameai-research-project-DeckxAlexander\Intermediate\Build\Win64\x64\AIResearchEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.ValExpApi.Cpp20.InclOrderUnreal5_4.h"
+﻿
 #include "ActionPlanner.h"
 
-float ActionPlanner::Heuristic(const FWorldState& state, const FWorldState& goal)
+float ActionPlanner::Heuristic(const FWorldState& state, const FWorldState& goal) 
 {
     float cost = 0.f;
     for (const auto& goalstate : goal)
@@ -15,7 +15,7 @@ float ActionPlanner::Heuristic(const FWorldState& state, const FWorldState& goal
     return cost;
 }
 
-bool ActionPlanner::HasReachedGoal(const FWorldState& state, const FWorldState& goal)
+bool ActionPlanner::HasReachedGoal(const FWorldState& state, const FWorldState& goal) 
 {
 	for (const auto& gstate : goal)
 	{
@@ -47,7 +47,6 @@ TArray<UGOAPAction*> ActionPlanner::PlanAStar(const FWorldState& start, const FW
 	
 	while (openSet.Num() > 0)
 	{
-		//Sort by FCost
 		openSet.Sort([](const FGoapNode& A, const FGoapNode& B)
 			{return A.FCost() < B.FCost();});
 		
@@ -64,7 +63,32 @@ TArray<UGOAPAction*> ActionPlanner::PlanAStar(const FWorldState& start, const FW
 			continue;
 		}
 		
-		//Continue....
+		for (UGOAPAction* action : current.RemainingActions)
+		{
+			if (action == nullptr) continue;
+			if (!action->IsApplicable(current.State)) continue; //If action is not applicable to the current state
+			
+			auto newState = current.State;
+			action->Apply(newState);
+			
+			FGoapNode childNode;
+			childNode.State = newState;
+			
+			childNode.GCost = current.GCost + action->GetCost();
+			childNode.HCost = Heuristic(newState, goal);
+			
+			childNode.RemainingActions = current.RemainingActions;
+			childNode.RemainingActions.Remove(action);
+			
+			childNode.Plan = current.Plan;
+			childNode.Plan.Add(action);
+			
+			openSet.Add(childNode);
+			
+
+		}
+		
+		
 	}
 	
 	
