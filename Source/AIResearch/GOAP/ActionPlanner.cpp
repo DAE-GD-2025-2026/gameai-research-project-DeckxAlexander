@@ -34,11 +34,12 @@ TArray<UGOAPAction*> ActionPlanner::PlanAStar(const FWorldState& start, const FW
 	TArray<FGoapNode> openSet;
 	
 	//Create StartNode
-	FGoapNode startNode;
+	FGoapNode startNode{};
 	startNode.State = start;
 	startNode.GCost = 0.f;
 	startNode.HCost = Heuristic(start, goal);
 	startNode.RemainingActions = possibleActions;
+	
 	
 	openSet.Add(startNode);
 	
@@ -66,12 +67,13 @@ TArray<UGOAPAction*> ActionPlanner::PlanAStar(const FWorldState& start, const FW
 		for (UGOAPAction* action : current.RemainingActions)
 		{
 			if (action == nullptr) continue;
+			if (!IsValid(action) ) continue;
 			if (!action->IsApplicable(current.State)) continue; //If action is not applicable to the current state
 			
 			auto newState = current.State;
 			action->Apply(newState);
 			
-			FGoapNode childNode;
+			FGoapNode childNode{};
 			childNode.State = newState;
 			
 			childNode.GCost = current.GCost + action->GetCost();

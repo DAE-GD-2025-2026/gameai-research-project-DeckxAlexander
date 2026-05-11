@@ -7,8 +7,11 @@ bool UGOAPAction::IsApplicable(const FWorldState& State) const
 {
 	for (const auto& preCond : m_Preconditions)
 	{
-		if (!State.Contains(preCond.Key) || State[preCond.Key] != preCond.Value)
+		const auto* ValuePtr = State.Find(preCond.Key);
+		if (!ValuePtr || *ValuePtr != preCond.Value)
+		{
 			return false;
+		}
 	}
 	return true;
 }

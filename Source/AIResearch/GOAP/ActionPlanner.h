@@ -9,8 +9,8 @@ struct FGoapNode
 	float GCost = 0.f;
 	float HCost = 0.f;
 
-	TArray<UGOAPAction*> Plan;
-	TArray<UGOAPAction*> RemainingActions;
+	TArray<UGOAPAction*> Plan{};
+	TArray<UGOAPAction*> RemainingActions{};
 
 	float FCost() const { return GCost + HCost; }
 };

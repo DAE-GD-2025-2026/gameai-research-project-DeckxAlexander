@@ -21,8 +21,8 @@ public:
 	virtual bool IsFinished() const { return true; }
 	virtual void Reset() {}
 protected:
-	FWorldState m_Preconditions;
-	FWorldState m_Effects;
+	FWorldState m_Preconditions{};
+	FWorldState m_Effects{};
 	float m_Cost{1.f};
 	
 	
