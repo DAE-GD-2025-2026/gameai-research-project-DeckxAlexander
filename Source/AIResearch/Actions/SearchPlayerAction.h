@@ -21,4 +21,10 @@ public:
 		m_Preconditions.Add("PAlive", true);
 		m_Effects.Add("SeePlayer", true);
 	}
+	
+	virtual void Start( AGOAPAIController* Controller) override;
+	virtual void Tick( AGOAPAIController* Controller, float DeltaTime) override;
+	
+private:
+	APawn* m_PlayerCharacter{};
 };

@@ -21,11 +21,18 @@ public:
 	virtual void OnPossess(APawn* InPawn) override;
 	virtual void Tick(float DeltaSeconds) override;
 	
+	UFUNCTION(BlueprintCallable)
+	void StartGOAP();
 	
 	void ProcessSuccess();
 	void ProcessFailure();
 	void ProcessWorldStateChanged();
+	
+	UFUNCTION(BlueprintCallable)
+	void ProcessOverlap(AActor* OtherActor);
 
+	
+	bool CanSeePlayer(APawn* PlayerPawn) const;
 protected:
 	virtual void BeginPlay() override;
 	
@@ -33,7 +40,7 @@ protected:
 	UBlackboardComponent* BlackboardComp;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Action Planner")
-	TMap<FName,bool> StartState{};
+	TMap<FName,bool> State{};
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Action Planner")
 	TMap<FName,bool> GoalState{};
@@ -44,14 +51,16 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category="Action Planner")
 	TArray<UGOAPAction*> ActivePlan{};
 	
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Instanced, Category="Action Planner")
-	TArray<UGOAPAction*> AvailableActions{};
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,Instanced, Category="Action Planner")
+	TArray<UGOAPAction*> AvailableActions;
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Instanced, Category="Action Planner")
 	UGOAPAction* IdleAction{};
 	
 	void CalculatePlan();
 	void ExecuteNext();
+	
+	
 
 	
 	

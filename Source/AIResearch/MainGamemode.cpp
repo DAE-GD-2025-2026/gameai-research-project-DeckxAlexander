@@ -11,9 +11,7 @@ void AMainGamemode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//-----------------------------------
-	// START STATE
-	//-----------------------------------
+
 
 	 TMap<FName, bool> Start{};
 

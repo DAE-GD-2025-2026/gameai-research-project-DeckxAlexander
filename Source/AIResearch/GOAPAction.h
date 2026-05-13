@@ -7,7 +7,8 @@
 #include "GOAPAction.generated.h"
 
 using FWorldState = TMap<FName, bool>;
-UCLASS(Blueprintable)
+class AGOAPAIController;
+UCLASS(Abstract, Blueprintable, EditInlineNew)
 class AIRESEARCH_API UGOAPAction : public UObject
 {
 	GENERATED_BODY()
@@ -16,14 +17,15 @@ public:
 	void Apply(FWorldState& State) const;
 	float GetCost() const {return m_Cost;}
 	//Functions to override
-	virtual void Start(class AAIController* Controller) {}
-	virtual void Tick(class AAIController* Controller, float DeltaTime) {}
+	virtual void Start( AGOAPAIController* Controller) {}
+	virtual void Tick( AGOAPAIController* Controller, float DeltaTime) {}
+	virtual void OnOverlap(AGOAPAIController* Controller, AActor* OtherActor) {}
 	virtual void Reset() {}
 protected:
 	FWorldState m_Preconditions{};
 	FWorldState m_Effects{};
 	float m_Cost{1.f};
-	
+	static FVector GetRandomReachablePoint(UObject* WorldContextObject, FVector Origin, float Radius);
 	
 	
 };

@@ -2,6 +2,10 @@
 
 
 #include "GOAPAction.h"
+#include "NavigationSystem.h"
+#include "NavigationSystemTypes.h"
+#include "NavFilters/NavigationQueryFilter.h"
+
 
 bool UGOAPAction::IsApplicable(const FWorldState& State) const
 {
@@ -23,3 +27,5 @@ void UGOAPAction::Apply(FWorldState& State) const
 		State.Add(effect.Key, effect.Value);
 	}
 }
+
+

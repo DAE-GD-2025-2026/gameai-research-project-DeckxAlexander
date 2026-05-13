@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Perception/PawnSensingComponent.h"
 #include "AgentCharacter.generated.h"
 
 UCLASS()
@@ -18,6 +19,11 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPawnSensingComponent* PawnSensing;
+
+
 
 public:	
 	// Called every frame
