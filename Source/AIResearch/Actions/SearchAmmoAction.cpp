@@ -55,7 +55,7 @@ bool USearchAmmoAction::GetClosestAmmo(UObject* world, FVector location)
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(world,AAmmoActor::StaticClass(),FoundActors);
 
-	if (FoundActors.Num() == 0) return false;
+	if (FoundActors.IsEmpty()) return false;
 	
 	AActor* closestActor = nullptr;
 	float closestDistanceSq = FLT_MAX;

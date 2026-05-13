@@ -2,58 +2,44 @@
 
 
 #include "MainGamemode.h"
+
+#include "GOAPAIController.h"
 #include "GOAP/ActionPlanner.h"
 #include "Actions/AttackPlayerAction.h"
 #include "Actions/SearchAmmoAction.h"
 #include "Actions/SearchPlayerAction.h"
+#include "Kismet/GameplayStatics.h"
 
 void AMainGamemode::BeginPlay()
 {
-	Super::BeginPlay();
-
-
-
-	 TMap<FName, bool> Start{};
-
-	Start.Add(FName("PAlive"), true);
-	Start.Add(FName("HasAmmo"), false);
-	Start.Add(FName("SeePlayer"), false);
-
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(
+		GetWorld(),
+		AGOAPAIController::StaticClass(),
+		Actors
+	);
 	
+	for (auto actor : Actors)
+	{
+		m_Controllers.Add(Cast<AGOAPAIController>(actor));
+	}
+}
 
-	FWorldState Goal{};
+void AMainGamemode::SetWorldState(TMap<FName, bool> state)
+{
+	for (const auto& s : state)
+	{
+		WorldState.Add(s.Key, s.Value);
+	}
+	AlertWorldStateControllers();
+}
 
-	Goal.Add(FName("PAlive"), false);
-	TArray<UGOAPAction*> Actions{};
-
-	Actions.Add(NewObject<USearchAmmoAction>(this));
-	Actions.Add(NewObject<USearchPlayerAction>(this));
-	Actions.Add(NewObject<UAttackPlayerAction>(this));
+void AMainGamemode::AlertWorldStateControllers()
+{
+	for (auto controller : m_Controllers)
+	{
+		controller->SetState(WorldState);
+	}
 	
-	TArray<UGOAPAction*> Plan = ActionPlanner::PlanAStar(Start,Goal,Actions);
-	UE_LOG(LogTemp, Warning,
-		TEXT("====== GOAP PLAN ======"));
-
-	if (Plan.Num() == 0)
-	{
-		UE_LOG(LogTemp, Warning,
-			TEXT("No Plan Found"));
-
-		return;
-	}
-
-	for (int32 i = 0; i < Plan.Num(); i++)
-	{
-		UGOAPAction* Action = Plan[i];
-
-		if (!Action)
-		{
-			continue;
-		}
-
-		UE_LOG(LogTemp, Warning,
-			TEXT("%d: %s"),
-			i,
-			*Action->GetClass()->GetName());
-	}
+	
 }

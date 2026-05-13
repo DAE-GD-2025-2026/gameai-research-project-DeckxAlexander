@@ -3,6 +3,7 @@
 
 #include "GOAPAIController.h"
 #include "GOAP/ActionPlanner.h"
+#include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 
@@ -20,6 +21,7 @@ AGOAPAIController::AGOAPAIController()
 void AGOAPAIController::BeginPlay()
 {
 	Super::BeginPlay(); //Calculate First Path
+	m_PlayerCharacter = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 }
 
 void AGOAPAIController::OnPossess(APawn* InPawn)
@@ -50,6 +52,7 @@ void AGOAPAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 	if (CurrentAction == nullptr) return;
+
 	CurrentAction->Tick(this, DeltaSeconds);
 }
 
@@ -63,6 +66,12 @@ void AGOAPAIController::ExecuteNext()
 {
 
 	CurrentAction = IdleAction;
+	
+	if (State["SeePlayer"] == true && !CanSeePlayer(m_PlayerCharacter))
+	{
+		State["SeePlayer"] = false;
+	}
+	
 	if (!ActivePlan.IsEmpty())
 	{
 		CurrentAction = ActivePlan[0];
@@ -84,6 +93,7 @@ void AGOAPAIController::ProcessSuccess()
 
 void AGOAPAIController::ProcessFailure()
 {
+	CurrentAction->ApplyFailed(State);
 	CalculatePlan(); //Recalculate On Failure
 }
 
@@ -103,10 +113,12 @@ bool AGOAPAIController::CanSeePlayer(APawn* PlayerPawn) const
 		return false;
 
 	FVector start = GetPawn()->GetActorLocation();
-
 	FVector end = PlayerPawn->GetActorLocation();
 
-
+	
+	if ((start-end).Length() > 1000) return false;
+	
+	
 	float radius = 50.f;
 
 	FHitResult hit;
@@ -114,16 +126,24 @@ bool AGOAPAIController::CanSeePlayer(APawn* PlayerPawn) const
 	FCollisionQueryParams params;
 	params.AddIgnoredActor(GetPawn());
 
-	bool bHit = GetWorld()->SweepSingleByChannel(
-		hit,
-		start,
-		end,
-		FQuat::Identity,
-		ECC_Visibility,
-		FCollisionShape::MakeSphere(radius),
-		params
-	);
+	bool bHit = GetWorld()->SweepSingleByChannel(hit,start,end,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(radius),params);
+	
+	return (bHit == true && hit.GetActor() == PlayerPawn) || !bHit;
+}
 
-	// If sphere trace hits player first -> visible
-	return !bHit;
+void AGOAPAIController::SetState(TMap<FName, bool> state)
+{
+	for (const auto& s : state)
+	{
+		State.Add(s.Key, s.Value);
+	}
+	
+	if (CurrentAction->IsApplicable(State)) return;
+	
+	StopMovement();
+	
+	CurrentAction = IdleAction;	
+	CalculatePlan();
+
+	
 }

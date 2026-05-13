@@ -20,5 +20,18 @@ public:
 		m_Preconditions.Add("SeePlayer", true);
 		m_Preconditions.Add("PAlive", true);
 		m_Effects.Add("PAlive", false);
+		m_Effects.Add("HasAmmo", false);
+		m_FailedEffects.Add("HasAmmo", false);
 	}
+	
+	void OnProjectileHit(AActor* OtherActor);
+	void OnProjectileFail();
+	
+	virtual void Start( AGOAPAIController* Controller) override;
+	virtual void Tick( AGOAPAIController* Controller, float DeltaTime) override;
+	
+private:
+	APawn* m_PlayerCharacter{};
+	AGOAPAIController* m_Controller{};
+	
 };

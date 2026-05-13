@@ -15,6 +15,7 @@ class AIRESEARCH_API UGOAPAction : public UObject
 public:
 	bool IsApplicable(const FWorldState& State) const;
 	void Apply(FWorldState& State) const;
+	void ApplyFailed(FWorldState& State) const;
 	float GetCost() const {return m_Cost;}
 	//Functions to override
 	virtual void Start( AGOAPAIController* Controller) {}
@@ -24,8 +25,9 @@ public:
 protected:
 	FWorldState m_Preconditions{};
 	FWorldState m_Effects{};
+	FWorldState m_FailedEffects{};
 	float m_Cost{1.f};
-	static FVector GetRandomReachablePoint(UObject* WorldContextObject, FVector Origin, float Radius);
+	
 	
 	
 };

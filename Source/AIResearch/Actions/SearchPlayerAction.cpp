@@ -19,10 +19,9 @@ void USearchPlayerAction::Tick(AGOAPAIController* Controller, float DeltaTime)
 	
 	if (!m_PlayerCharacter)
 		return;
-
-	auto distance = (Controller->GetPawn()->GetActorLocation() - m_PlayerCharacter->GetActorLocation()).Length();
+	
 	// If AI sees the player
-	if (Controller->CanSeePlayer(m_PlayerCharacter) && distance <= 2000)
+	if (Controller->CanSeePlayer(m_PlayerCharacter) )
 	{
 		Controller->StopMovement();
 		Controller->ProcessSuccess();
@@ -30,7 +29,7 @@ void USearchPlayerAction::Tick(AGOAPAIController* Controller, float DeltaTime)
 	else
 	{
 		// Move toward player until visible
-		Controller->MoveToActor(m_PlayerCharacter, 100.f);
+		Controller->MoveToActor(m_PlayerCharacter, 20.f);
 	}
 	
 }

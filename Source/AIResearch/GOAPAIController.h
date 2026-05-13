@@ -6,8 +6,10 @@
 #include "AIController.h"
 #include "GOAPAction.h"
 #include "GOAPAIController.generated.h"
+class AProjectileActor;
 
 class UGOAPAction;
+
 /**
  * 
  */
@@ -33,6 +35,12 @@ public:
 
 	
 	bool CanSeePlayer(APawn* PlayerPawn) const;
+	
+	void SetState(TMap<FName,bool> state);
+		
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Attacking")
+	TSubclassOf<AProjectileActor> ProjectileClass;
+	
 protected:
 	virtual void BeginPlay() override;
 	
@@ -56,6 +64,8 @@ protected:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Instanced, Category="Action Planner")
 	UGOAPAction* IdleAction{};
+
+	APawn* m_PlayerCharacter{};
 	
 	void CalculatePlan();
 	void ExecuteNext();

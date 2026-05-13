@@ -9,11 +9,23 @@
 /**
  * 
  */
+class AGOAPAIController;
 UCLASS()
 class AIRESEARCH_API AMainGamemode : public AGameModeBase
 {
 	GENERATED_BODY()
+public:
+	void SetWorldState(TMap<FName,bool> state);
+
 protected:
 
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Action Planner")
+	TMap<FName,bool> WorldState{};
+	
+	void AlertWorldStateControllers();
+
+	TArray<AGOAPAIController*> m_Controllers;
+	
 };

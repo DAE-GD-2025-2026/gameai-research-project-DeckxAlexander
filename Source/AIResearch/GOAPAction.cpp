@@ -22,7 +22,17 @@ bool UGOAPAction::IsApplicable(const FWorldState& State) const
 
 void UGOAPAction::Apply(FWorldState& State) const
 {
+	if (m_Effects.IsEmpty()) return;
 	for (const auto& effect : m_Effects)
+	{
+		State.Add(effect.Key, effect.Value);
+	}
+}
+
+void UGOAPAction::ApplyFailed(FWorldState& State) const
+{
+	if (m_FailedEffects.IsEmpty()) return;
+	for (const auto& effect : m_FailedEffects)
 	{
 		State.Add(effect.Key, effect.Value);
 	}
