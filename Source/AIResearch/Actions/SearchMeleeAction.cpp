@@ -1,34 +1,30 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SearchAmmoAction.h"
-
-#include "AIController.h"
-#include "AIResearch/AmmoActor.h"
+#include "SearchMeleeAction.h"
 #include "Kismet/GameplayStatics.h"
 #include "AIResearch/GOAPAIController.h"
 #include "AIResearch/MainGamemode.h"
+#include "AIResearch/MeleeActor.h"
 
-void USearchAmmoAction::Start( AGOAPAIController* Controller)
+void USearchMeleeAction::Start(AGOAPAIController* Controller)
 {
 	Super::Start(Controller);
-	if (!GetClosestAmmo(Controller->GetWorld(),Controller->GetPawn()->GetActorLocation())) Controller->ProcessFailure();
+	if (!GetClosestMelee(Controller->GetWorld(),Controller->GetPawn()->GetActorLocation())) Controller->ProcessFailure();
 	
 	if (!IsValid(Controller->GetPawn()))return;
 	
 	
-	EPathFollowingRequestResult::Type Result =
-	Controller->MoveToLocation(m_TargetAmmo->GetActorLocation(),5.0f);
-	
+	EPathFollowingRequestResult::Type Result = Controller->MoveToLocation(m_TargetAmmo->GetActorLocation(),5.0f);
 }
 
-void USearchAmmoAction::Tick( AGOAPAIController* Controller, float DeltaTime)
+void USearchMeleeAction::Tick(AGOAPAIController* Controller, float DeltaTime)
 {
 	Super::Tick(Controller, DeltaTime);
 	if (!IsValid(m_TargetAmmo) )
 	{
 		Controller->StopMovement();
-		if (!GetClosestAmmo(Controller->GetWorld(),Controller->GetPawn()->GetActorLocation()))
+		if (!GetClosestMelee(Controller->GetWorld(),Controller->GetPawn()->GetActorLocation()))
 		{
 			Controller->ProcessFailure();
 			return;
@@ -36,13 +32,14 @@ void USearchAmmoAction::Tick( AGOAPAIController* Controller, float DeltaTime)
 		
 		Controller->MoveToLocation(m_TargetAmmo->GetActorLocation(),5.0f,true,true,false,true);
 	}
-	
 }
 
-void USearchAmmoAction::OnOverlap(AGOAPAIController* Controller, AActor* OtherActor)
+void USearchMeleeAction::OnOverlap(AGOAPAIController* Controller, AActor* OtherActor)
 {
 	Super::OnOverlap(Controller, OtherActor);
-	if (OtherActor->IsA(AAmmoActor::StaticClass()))
+	
+	
+	if (IsValid(OtherActor) && OtherActor->IsA(AMeleeActor::StaticClass()))
 	{
 		OtherActor->Destroy();
 		Controller->ProcessSuccess();
@@ -50,14 +47,12 @@ void USearchAmmoAction::OnOverlap(AGOAPAIController* Controller, AActor* OtherAc
 		gamemode->CheckAmounts();
 
 	}
-	
 }
 
-bool USearchAmmoAction::GetClosestAmmo(UObject* world, FVector location)
+bool USearchMeleeAction::GetClosestMelee(UObject* world, FVector location)
 {
-	if (!world) return false;
 	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(world,AAmmoActor::StaticClass(),FoundActors);
+	UGameplayStatics::GetAllActorsOfClass(world,AMeleeActor::StaticClass(),FoundActors);
 
 	if (FoundActors.IsEmpty()) return false;
 	
@@ -66,8 +61,7 @@ bool USearchAmmoAction::GetClosestAmmo(UObject* world, FVector location)
 
 	for (AActor* Actor : FoundActors)
 	{
-		if (!Actor)
-			continue;
+		if (!Actor) continue;
 
 		float DistanceSq = FVector::DistSquared(location,Actor->GetActorLocation());
 
@@ -81,7 +75,3 @@ bool USearchAmmoAction::GetClosestAmmo(UObject* world, FVector location)
 	m_TargetAmmo = closestActor;
 	return true;
 }
-
-
-
-

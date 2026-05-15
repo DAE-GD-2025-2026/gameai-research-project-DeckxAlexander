@@ -133,10 +133,12 @@ bool AGOAPAIController::CanSeePlayer(APawn* PlayerPawn) const
 
 void AGOAPAIController::SetState(TMap<FName, bool> state)
 {
-	for (const auto& s : state)
+	for (auto s : state)
 	{
 		State.Add(s.Key, s.Value);
 	}
+	
+	if (CurrentAction == nullptr) return;
 	
 	if (CurrentAction->IsApplicable(State)) return;
 	

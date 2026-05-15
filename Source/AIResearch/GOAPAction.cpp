@@ -9,6 +9,7 @@
 
 bool UGOAPAction::IsApplicable(const FWorldState& State) const
 {
+	if (m_Preconditions.IsEmpty()) return true;
 	for (const auto& preCond : m_Preconditions)
 	{
 		const auto* ValuePtr = State.Find(preCond.Key);

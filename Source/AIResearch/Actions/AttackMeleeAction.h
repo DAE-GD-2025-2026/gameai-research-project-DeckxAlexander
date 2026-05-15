@@ -4,29 +4,27 @@
 
 #include "CoreMinimal.h"
 #include "AIResearch/GOAPAction.h"
-
-#include "AttackPlayerAction.generated.h"
+#include "AttackMeleeAction.generated.h"
 
 /**
  * 
  */
-UCLASS(Blueprintable)
-class AIRESEARCH_API UAttackPlayerAction : public UGOAPAction
+UCLASS()
+class AIRESEARCH_API UAttackMeleeAction : public UGOAPAction
 {
 	GENERATED_BODY()
 public:
-	UAttackPlayerAction()
+	UAttackMeleeAction()
 	{
-		m_Preconditions.Add("HasAmmo", true);
-		m_Preconditions.Add("SeePlayer", true);
+		m_Preconditions.Add("HasMelee", true);
 		m_Preconditions.Add("PAlive", true);
 		m_Effects.Add("PAlive", false);
-		m_Effects.Add("HasAmmo", false);
-		m_FailedEffects.Add("HasAmmo", false);
+		m_Effects.Add("HasMelee", false);
+		m_FailedEffects.Add("HasMelee", false);
+
+		m_Cost = 10.f;
 	}
 	
-	void OnProjectileHit(AActor* OtherActor);
-	void OnProjectileFail();
 	
 	virtual void Start( AGOAPAIController* Controller) override;
 	virtual void Tick( AGOAPAIController* Controller, float DeltaTime) override;
@@ -35,4 +33,5 @@ private:
 	APawn* m_PlayerCharacter{};
 	AGOAPAIController* m_Controller{};
 	
+	bool AttackSphere(AGOAPAIController* Controller);
 };
