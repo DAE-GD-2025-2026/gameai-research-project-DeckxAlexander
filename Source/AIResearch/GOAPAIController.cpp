@@ -54,6 +54,11 @@ void AGOAPAIController::Tick(float DeltaSeconds)
 	if (CurrentAction == nullptr) return;
 
 	CurrentAction->Tick(this, DeltaSeconds);
+	
+
+	FString ActionText = CurrentAction->GetName();
+	DrawDebugString(GetWorld(),GetPawn()->GetActorLocation(),ActionText,nullptr,FColor::Green,0.f, true);
+	
 }
 
 void AGOAPAIController::StartGOAP()
