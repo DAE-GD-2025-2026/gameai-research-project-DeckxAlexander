@@ -37,9 +37,13 @@ public:
 	bool CanSeePlayer(APawn* PlayerPawn) const;
 	
 	void SetState(TMap<FName,bool> state);
+	
+	void SetGoalState(TMap<FName,bool> state);
 		
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="Attacking")
 	TSubclassOf<AProjectileActor> ProjectileClass;
+	
+	UGOAPAction* GetCurrentAction() const { return CurrentAction; }
 	
 protected:
 	virtual void BeginPlay() override;

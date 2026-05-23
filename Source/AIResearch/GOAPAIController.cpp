@@ -154,3 +154,11 @@ void AGOAPAIController::SetState(TMap<FName, bool> state)
 
 	
 }
+
+void AGOAPAIController::SetGoalState(TMap<FName, bool> state)
+{
+	GoalState = state;
+	CalculatePlan();
+	
+	
+}

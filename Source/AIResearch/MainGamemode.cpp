@@ -35,6 +35,8 @@ void AMainGamemode::BeginPlay()
 		SetWorldState({{FName("AmmoInScene"), false}});
 	else SetWorldState({{FName("AmmoInScene"), true}});
 	
+	SetWorldState({{FName("Alarm"), false}});
+	
 	
 	//Start all controllers!
 	for (auto controller : m_Controllers)

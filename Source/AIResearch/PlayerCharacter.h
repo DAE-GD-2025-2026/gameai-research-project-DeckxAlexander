@@ -4,30 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Perception/PawnSensingComponent.h"
-#include "AgentCharacter.generated.h"
+#include "PlayerCharacter.generated.h"
 
 UCLASS()
-class AIRESEARCH_API AAgentCharacter : public ACharacter
+class AIRESEARCH_API APlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	AAgentCharacter();
+	APlayerCharacter();
 
-
-	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UPawnSensingComponent* PawnSensing;
 
-
-	UFUNCTION()
-	void OnPawnSeen(APawn* SeenPawn);
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
