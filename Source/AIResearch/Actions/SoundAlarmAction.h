@@ -25,8 +25,6 @@ public:
 	virtual void Tick(AGOAPAIController* Controller, float DeltaTime) override;
 
 private:
-	
-	
 	AActor* m_AlarmActor{};
 	
 };

@@ -40,8 +40,9 @@ void USoundAlarmAction::Tick(AGOAPAIController* Controller, float DeltaTime)
 	// Reached alarm
 	if (Distance <= 200.f)
 	{
-		Cast<AAlarmActor>(m_AlarmActor)->SoundAlarm();
 		Controller->ProcessSuccess();
+		Cast<AAlarmActor>(m_AlarmActor)->SoundAlarm();
+
 	}
 	
 }
