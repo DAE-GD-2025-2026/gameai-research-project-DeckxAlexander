@@ -155,5 +155,3 @@ If the player dies, the agents return to their primary task of clearing hazards 
 ---
 
 
-
-inside a constantly evolving environment.
