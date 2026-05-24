@@ -52,8 +52,9 @@ void USearchHazardAction::OnOverlap(AGOAPAIController* Controller, AActor* Other
 bool USearchHazardAction::GetClosestHazard(AGOAPAIController* Controller, FVector location)
 {
 	auto world = Controller->GetWorld();
+
 	
-	TArray<AActor*> FoundActors;
+	TArray<AActor*> FoundActors{};
 	UGameplayStatics::GetAllActorsOfClass(world,AHazardActor::StaticClass(),FoundActors);
 
 	if (FoundActors.IsEmpty()) return false;

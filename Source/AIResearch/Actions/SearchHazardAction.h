@@ -20,6 +20,7 @@ public:
 		m_Preconditions.Add("HazardInScene", true);
 		m_Preconditions.Add("Alerted", false);
 		m_Effects.Add("HoldsHazard", true);
+		m_FailedEffects.Add("HazardInScene", false);
 	}
 	
 	virtual void Start(AGOAPAIController* Controller) override;

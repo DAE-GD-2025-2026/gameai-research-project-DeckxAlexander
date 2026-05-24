@@ -70,7 +70,7 @@ void AMainGamemode::AlertWorldStateControllers()
 	{
 		for (auto controller : m_Controllers)
 		{
-			controller->SetGoalState({{"HazardInScene", false},
+			controller->SetGoalState({{"HazardInScene", false}, {"HoldsHazard", false}
 			});
 		}
 	}

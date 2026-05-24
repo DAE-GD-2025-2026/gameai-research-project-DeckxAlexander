@@ -13,8 +13,8 @@ AAgentCharacter::AAgentCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensing"));
-	PawnSensing->SightRadius = 4000.f;
-	PawnSensing->SetPeripheralVisionAngle(60.f);
+	PawnSensing->SightRadius = 3000.f;
+	PawnSensing->SetPeripheralVisionAngle(50.f);
 	
 	AlertConditions.Add(FName("Alerted"), false);
 }
