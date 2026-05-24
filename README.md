@@ -28,7 +28,7 @@ Each AI agent has the following behaviour:
 
 
 # ⚙️ Core System
-Each Agent operates using a GOAP architecture composed of:
+A solid GOAP system consists of the following components:
 
 ## 🌍 (World) State
 
@@ -116,6 +116,8 @@ The idea behind the current implementation is that agents aim to make the enviro
 
 The agents begin by clearing hazards in the scene, picking them up and transporting them to the garbage disposal area.
 
+![Hazard Image](RepoImages/HazardsImage.png)
+
 ---
 
 ## 👁️ Detection
@@ -128,6 +130,8 @@ Each agent has a pawn sensing component. If this component detects a player, the
 
 When the alarm is triggered, all agents become alerted and are assigned the goal of eliminating the player.
 
+![Alarm Image](RepoImages/AlarmImage.png)
+
 ---
 
 ## 🏃 Pursuit
@@ -136,11 +140,16 @@ The agents first attempt to acquire ammunition or a melee weapon, prioritizing a
 Once equipped, they move into range of the player and attempt to attack. 
 If an attack misses, they lose their current weapon or ammo and will seek out a replacement before trying again.
 
+![Alarm Image](RepoImages/PursuitImage.png)
+
 ---
 
-## 💀 Player death
+## 💀 Player 
 
+The player is a purple cube controlled with the WASD keys.
 If the player dies, the agents return to their primary task of clearing hazards in the scene.
+
+![Alarm Image](RepoImages/PlayerImage.png)
 
 ---
 
@@ -154,4 +163,13 @@ If the player dies, the agents return to their primary task of clearing hazards 
 
 ---
 
+# 📖 Sources
+
+[Goal Oriented Action Planning - Vedant Chaudhari](https://medium.com/@vedantchaudhari/goal-oriented-action-planning-34035ed40d0b)
+
+[GOAP - CrashKonijn](https://goap.crashkonijn.com/)
+
+[AI in F.E.A.R - AI and Games](https://www.youtube.com/watch?v=PaOLBOuyswI)
+
+---
 
