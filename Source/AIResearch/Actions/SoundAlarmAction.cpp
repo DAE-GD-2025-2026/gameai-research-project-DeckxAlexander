@@ -38,7 +38,7 @@ void USoundAlarmAction::Tick(AGOAPAIController* Controller, float DeltaTime)
 	const float Distance =FVector::Dist(ControlledPawn->GetActorLocation(),m_AlarmActor->GetActorLocation());
 
 	// Reached alarm
-	if (Distance <= 250.f)
+	if (Distance <= 300.f)
 	{
 		Controller->ProcessSuccess();
 		Cast<AAlarmActor>(m_AlarmActor)->SoundAlarm();

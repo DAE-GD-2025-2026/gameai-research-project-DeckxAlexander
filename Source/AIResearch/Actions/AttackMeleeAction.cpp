@@ -67,7 +67,6 @@ bool UAttackMeleeAction::AttackSphere(AGOAPAIController* Controller)
 	IgnoreActors.Add(Controller->GetPawn());
 	float Radius = 350.0f;
 	FVector Center = Controller->GetPawn()->GetActorLocation();
-	DrawDebugSphere(GetWorld(),Center,Radius,24,FColor::Green,false,2.0f,0,2.0f);
 	bool bFoundActors = UKismetSystemLibrary::SphereOverlapActors(GetWorld(),Center,Radius,ObjectTypes,ACharacter::StaticClass(), IgnoreActors,OutActors);
 
 	if (bFoundActors)
