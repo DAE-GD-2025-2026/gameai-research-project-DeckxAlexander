@@ -116,6 +116,8 @@ The idea behind the current implementation is that agents aim to make the enviro
 
 The agents begin by clearing hazards in the scene, picking them up and transporting them to the garbage disposal area.
 
+![Hazard Image](RepoImages/HazardsImage.png)
+
 ---
 
 ## 👁️ Detection
@@ -128,6 +130,8 @@ Each agent has a pawn sensing component. If this component detects a player, the
 
 When the alarm is triggered, all agents become alerted and are assigned the goal of eliminating the player.
 
+![Alarm Image](RepoImages/AlarmImage.png)
+
 ---
 
 ## 🏃 Pursuit
@@ -136,11 +140,16 @@ The agents first attempt to acquire ammunition or a melee weapon, prioritizing a
 Once equipped, they move into range of the player and attempt to attack. 
 If an attack misses, they lose their current weapon or ammo and will seek out a replacement before trying again.
 
+![Alarm Image](RepoImages/PursuitImage.png)
+
 ---
 
-## 💀 Player death
+## 💀 Player 
 
+The player is a purple cube controlled with the WASD keys.
 If the player dies, the agents return to their primary task of clearing hazards in the scene.
+
+![Alarm Image](RepoImages/PlayerImage.png)
 
 ---
 
