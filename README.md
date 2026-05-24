@@ -85,12 +85,17 @@ In this implementation, actions can either succeed or fail, both have effects on
 
 ---
 
-## 🌍 Planner
+## 🗒️ Planner
 
 The planner is the core system that drives the entire process.
 It calculates a sequence of actions by using an A* algorithm to determine the cheapest and most efficient plan for achieving the desired goal.
 
-TODO WRITE ABOUT IMPLEMENTATION HERE
+The GOAP planner is an A* planner where each node contains a state, GCost, HCost, a plan, and a list of remaining actions. Since each action can only be performed once, actions are removed from the remaining action list after being used.
+
+The planner iterates over the open set, which initially contains only the start node. The open set is sorted based on the total cost, and each node is checked to determine whether the goal has already been reached or whether the GCost exceeds the allowed limit.
+
+Afterwards, the planner iterates over the remaining actions and creates child nodes for the actions whose preconditions are satisfied. These child nodes are then added to the open set.
+
 ---
 
 ## 🧠 Controller
