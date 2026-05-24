@@ -163,4 +163,13 @@ If the player dies, the agents return to their primary task of clearing hazards 
 
 ---
 
+# 📖 Sources
+
+[Goal Oriented Action Planning - Vedant Chaudhari](https://medium.com/@vedantchaudhari/goal-oriented-action-planning-34035ed40d0b)
+
+[GOAP - CrashKonijn](https://goap.crashkonijn.com/)
+
+[AI in F.E.A.R - AI and Games](https://www.youtube.com/watch?v=PaOLBOuyswI)
+
+---
 
