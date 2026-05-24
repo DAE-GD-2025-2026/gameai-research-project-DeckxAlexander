@@ -5,6 +5,7 @@
 
 #include "AmmoActor.h"
 #include "GOAPAIController.h"
+#include "HazardActor.h"
 #include "MeleeActor.h"
 #include "GOAP/ActionPlanner.h"
 #include "Actions/AttackPlayerAction.h"
@@ -36,6 +37,7 @@ void AMainGamemode::BeginPlay()
 	else SetWorldState({{FName("AmmoInScene"), true}});
 	
 	SetWorldState({{FName("Alarm"), false}});
+	SetWorldState({{FName("HazardInScene"), true}});
 	
 	
 	//Start all controllers!
@@ -59,8 +61,18 @@ void AMainGamemode::AlertWorldStateControllers()
 	if (WorldState.IsEmpty()) return;
 	for (auto controller : m_Controllers)
 	{
-		
 		controller->SetState(WorldState);
+	}
+	
+	// If Player is dead return to working!
+	const auto* ValuePtr = WorldState.Find(FName("PAlive"));
+	if (ValuePtr != nullptr && *ValuePtr == false)
+	{
+		for (auto controller : m_Controllers)
+		{
+			controller->SetGoalState({{"HazardInScene", false},
+			});
+		}
 	}
 	
 	
@@ -75,6 +87,9 @@ void AMainGamemode::CheckAmounts()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AAmmoActor::StaticClass(),Actors);
 	AmountOfAmmo = Actors.Num();
 	
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AHazardActor::StaticClass(),Actors);
+	AmountOfHazard = Actors.Num();
+	
 	if (AmountOfMelee <= 0)
 	{
 		SetWorldState({{FName("MeleeInScene"), false}});
@@ -84,4 +99,18 @@ void AMainGamemode::CheckAmounts()
 	{
 		SetWorldState({{FName("AmmoInScene"), false}});
 	}
+	
+	if (AmountOfHazard <= 0)
+	{
+		SetWorldState({{FName("HazardInScene"), false}});
+	}
+}
+
+int AMainGamemode::CheckHazards()
+{
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),AHazardActor::StaticClass(),Actors);
+	AmountOfHazard = Actors.Num(); 
+	
+	return AmountOfHazard;
 }

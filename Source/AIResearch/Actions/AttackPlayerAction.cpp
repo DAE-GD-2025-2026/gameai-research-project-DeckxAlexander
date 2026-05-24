@@ -14,8 +14,8 @@ void UAttackPlayerAction::OnProjectileHit(AActor* OtherActor)
 	{
 		m_Controller->ProcessSuccess();
 		AMainGamemode* gamemode = Cast<AMainGamemode>(UGameplayStatics::GetGameMode(GetWorld()));
-		gamemode->SetWorldState(m_Effects);
 		m_PlayerCharacter->Destroy();
+		gamemode->SetWorldState(m_Effects);
 	}
 	else m_Controller->ProcessFailure();
 }

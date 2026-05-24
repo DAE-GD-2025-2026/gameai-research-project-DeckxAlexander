@@ -15,6 +15,8 @@ AAgentCharacter::AAgentCharacter()
 	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensing"));
 	PawnSensing->SightRadius = 4000.f;
 	PawnSensing->SetPeripheralVisionAngle(60.f);
+	
+	AlertConditions.Add(FName("Alerted"), false);
 }
 
 // Called when the game starts or when spawned
@@ -40,11 +42,17 @@ void AAgentCharacter::OnPawnSeen(APawn* SeenPawn)
 		if (AGOAPAIController* AIController =
 			Cast<AGOAPAIController>(GetController()))
 		{
-			if (AIController->GetCurrentAction()->IsA(URoamAction::StaticClass()) )
+			for (auto state : AlertConditions)
 			{
-				//AIController->StopMovement();
-				AIController->ProcessSuccess();
+				const auto* key = AIController->GetCurrentState().Find(state.Key);
+				if (key != nullptr && *key == state.Value )
+				{
+					//AIController->StopMovement();
+					AIController->SetState({{FName("Alerted"), true}});
+					AIController->SetGoalState({{FName("Alarm"), true}});
+				}
 			}
+
 
 		}
 	}

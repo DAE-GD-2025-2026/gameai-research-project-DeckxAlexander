@@ -17,14 +17,17 @@ public:
 	USearchHazardAction()
 	{
 		m_Preconditions.Add("HoldsHazard", false);
-		m_Preconditions.Add("HazardInArea", true);
+		m_Preconditions.Add("HazardInScene", true);
 		m_Preconditions.Add("Alerted", false);
 		m_Effects.Add("HoldsHazard", true);
 	}
 	
 	virtual void Start(AGOAPAIController* Controller) override;
 	virtual void Tick(AGOAPAIController* Controller, float DeltaTime) override;
+	virtual void OnOverlap(AGOAPAIController* Controller, AActor* OtherActor) override;
 
 private:
 	AActor* m_HazardActor{};
+	
+	bool GetClosestHazard(AGOAPAIController* Controller, FVector location);
 };

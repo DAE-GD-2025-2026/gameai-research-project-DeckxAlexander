@@ -25,7 +25,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UPawnSensingComponent* PawnSensing;
 
-
+	TMap<FName,bool> AlertConditions;
+	
 	UFUNCTION()
 	void OnPawnSeen(APawn* SeenPawn);
 public:	

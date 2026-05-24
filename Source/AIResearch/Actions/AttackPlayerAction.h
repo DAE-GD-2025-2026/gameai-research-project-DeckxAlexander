@@ -21,6 +21,7 @@ public:
 		m_Preconditions.Add("SeePlayer", true);
 		m_Preconditions.Add("PAlive", true);
 		m_Effects.Add("PAlive", false);
+		m_Effects.Add("Alerted", false);
 		m_Effects.Add("HasAmmo", false);
 		m_FailedEffects.Add("HasAmmo", false);
 	}

@@ -34,6 +34,7 @@ void AAlarmActor::SoundAlarm()
 	{
 		auto controller = Cast<AGOAPAIController>(actor);
 		controller->SetGoalState({{FName("PAlive"), false}});
+		controller->SetState({{FName("Alerted"), true}});
 		
 	}
 	

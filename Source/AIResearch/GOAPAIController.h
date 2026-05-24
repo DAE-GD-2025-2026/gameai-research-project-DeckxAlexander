@@ -44,6 +44,7 @@ public:
 	TSubclassOf<AProjectileActor> ProjectileClass;
 	
 	UGOAPAction* GetCurrentAction() const { return CurrentAction; }
+	TMap<FName,bool> GetCurrentState() const { return State; }
 	
 protected:
 	virtual void BeginPlay() override;

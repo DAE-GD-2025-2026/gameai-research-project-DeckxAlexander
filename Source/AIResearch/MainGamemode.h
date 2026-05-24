@@ -17,6 +17,8 @@ class AIRESEARCH_API AMainGamemode : public AGameModeBase
 public:
 	void SetWorldState(TMap<FName,bool> state);
 	void CheckAmounts();
+	
+	int CheckHazards();
 
 protected:
 
@@ -30,6 +32,7 @@ protected:
 	TArray<AGOAPAIController*> m_Controllers;
 	int AmountOfAmmo = 0;
 	int AmountOfMelee = 0;
+	int AmountOfHazard = 0;
 	
 
 };

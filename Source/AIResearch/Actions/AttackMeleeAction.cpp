@@ -45,8 +45,9 @@ void UAttackMeleeAction::Tick(AGOAPAIController* Controller, float DeltaTime)
 		{
 			Controller->ProcessSuccess();
 			AMainGamemode* gamemode = Cast<AMainGamemode>(UGameplayStatics::GetGameMode(GetWorld()));
-			gamemode->SetWorldState(m_Effects);
 			m_PlayerCharacter->Destroy();
+			gamemode->SetWorldState(m_Effects);
+
 			return;
 		}
 		else Controller->ProcessFailure();

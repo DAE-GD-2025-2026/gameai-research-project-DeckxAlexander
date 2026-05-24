@@ -19,6 +19,7 @@ public:
 		m_Preconditions.Add("HasMelee", true);
 		m_Preconditions.Add("PAlive", true);
 		m_Effects.Add("PAlive", false);
+		m_Effects.Add("Alerted", false);
 		m_Effects.Add("HasMelee", false);
 		m_FailedEffects.Add("HasMelee", false);
 
