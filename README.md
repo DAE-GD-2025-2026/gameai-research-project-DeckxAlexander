@@ -96,6 +96,7 @@ The planner iterates over the open set, which initially contains only the start 
 
 Afterwards, the planner iterates over the remaining actions and creates child nodes for the actions whose preconditions are satisfied. These child nodes are then added to the open set.
 
+![Planner Image](RepoImages/PlannerImage.png)
 ---
 
 ## 🧠 Controller
