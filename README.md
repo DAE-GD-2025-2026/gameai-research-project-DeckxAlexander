@@ -28,7 +28,7 @@ Each AI agent has the following behaviour:
 
 
 # ⚙️ Core System
-Each Agent operates using a GOAP architecture composed of:
+A solid GOAP system consists of the following components:
 
 ## 🌍 (World) State
 
