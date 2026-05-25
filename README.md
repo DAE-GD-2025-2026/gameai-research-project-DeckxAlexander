@@ -1,6 +1,6 @@
 # 🧠 GOAP Enemy AI
 
-> A implementation of a GOAP system in Unreal Engine
+> Alexander Deckx
 
 ---
 
@@ -9,6 +9,13 @@
 **GOAP (Goal-Oriented Action Planning)** is a Stanford Research Institute Problem Solver that allows npc's to behave in a believable dynamic way. 
 Instead of following pre-scripted behaviours the agents make decisions based on goals they want to achieve during the game. Breaking down a complex task into a sequence of multiple actions.
 This sequence is contingent on both the state of the world and the state of the agent. Meaning that the actions of one agent might differ from the other.
+
+---
+
+## 🔫 F.E.A.R.
+**First Encounter Assault Recon**, developed by Monolith Productions, was one of the earliest and most influential examples of GOAP in games. Instead of relying on a large FSM, agents dynamically calculated plans to achieve goals.
+Each agent had multiple goals with dynamic priorities and a set of actions represented by C++ classes. Actions were continuously validated during planning and execution, since they could become invalid due to changes in the game world.
+Once a plan was completed, the agent selected a new goal.
 
 ---
 
@@ -25,7 +32,6 @@ Each AI agent has the following behaviour:
 - Kill the player when alerted
 
 ---
-
 
 # ⚙️ Core System
 A solid GOAP system consists of the following components:
@@ -75,13 +81,20 @@ Each action contains:
 - Failed Effects
 - Cost
 
-Besides a start and tick function each action contains behaviour specific to that action.
-
 The preconditions define the state the agent must be in before the action can be executed.
 The effects are the changes of the agent's state when the action finishes.
 The cost is used by the planner to prioritize certain actions over others.
-
 In this implementation, actions can either succeed or fail, both have effects on the state of the agent.
+
+I decided to use inheritance for the actions. BaseAction contains Start and Tick functions, as well as IsApplicable, Apply, and ApplyFailed:
+
+The IsApplicable function checks whether the agent’s current state satisfies the conditions required for the action:
+
+PICTURE CODE
+
+The Apply and ApplyFailed functions update the agent’s state based on the outcome of the action, either when it succeeds or when it fails:
+
+PICTURE CODE
 
 ---
 
@@ -96,6 +109,8 @@ The planner iterates over the open set, which initially contains only the start 
 
 Afterwards, the planner iterates over the remaining actions and creates child nodes for the actions whose preconditions are satisfied. These child nodes are then added to the open set.
 
+PICTURE CODE
+
 ![Planner Image](RepoImages/PlannerImage.png)
 ---
 
@@ -105,6 +120,18 @@ The agent’s AI Controller also contains additional logic.
 It recalculates the plan whenever a meaningful world state changes or when an action fails.
 
 The controller also maintains the list of available actions and, in this implementation, includes an idle-action failsafe in case no valid plan can be found or the current goal has already been achieved.
+
+In this implementation, the controller also contains logic to determine whether the agent can see the player within the required range.
+
+When an action finishes, it must call either ProcessSuccess or ProcessFailure on the controller. The controller will then either recalculate the plan or continue to the next action.
+
+PICTURE CODE
+
+Before executing the next action, the controller checks again whether the action is still applicable and, in this implementation, whether the player is still within shooting range.
+
+As a failsafe, the controller always sets the current action to the idle action while calculating or switching to another action.
+
+PICTURE CODE
 
 ---
 
