@@ -88,13 +88,10 @@ In this implementation, actions can either succeed or fail, both have effects on
 
 I decided to use inheritance for the actions. BaseAction contains Start and Tick functions, as well as IsApplicable, Apply, and ApplyFailed:
 
-The IsApplicable function checks whether the agent’s current state satisfies the conditions required for the action:
+The IsApplicable function checks whether the agent’s current state satisfies the conditions required for the action.
+The Apply and ApplyFailed functions update the agent’s state based on the outcome of the action, either when it succeeds or when it fails.
 
-PICTURE CODE
-
-The Apply and ApplyFailed functions update the agent’s state based on the outcome of the action, either when it succeeds or when it fails:
-
-PICTURE CODE
+![Action Code](RepoImages/ActionCode.png)
 
 ---
 
@@ -109,7 +106,7 @@ The planner iterates over the open set, which initially contains only the start 
 
 Afterwards, the planner iterates over the remaining actions and creates child nodes for the actions whose preconditions are satisfied. These child nodes are then added to the open set.
 
-PICTURE CODE
+![Planner Code](RepoImages/PlannerCode.png)
 
 ![Planner Image](RepoImages/PlannerImage.png)
 ---
@@ -125,13 +122,13 @@ In this implementation, the controller also contains logic to determine whether 
 
 When an action finishes, it must call either ProcessSuccess or ProcessFailure on the controller. The controller will then either recalculate the plan or continue to the next action.
 
-PICTURE CODE
+![Process Code](RepoImages/ProcessFinsihCode.png)
 
 Before executing the next action, the controller checks again whether the action is still applicable and, in this implementation, whether the player is still within shooting range.
 
 As a failsafe, the controller always sets the current action to the idle action while calculating or switching to another action.
 
-PICTURE CODE
+![ExecuteNext Code](RepoImages/ExecuteNextCode.png)
 
 ---
 
