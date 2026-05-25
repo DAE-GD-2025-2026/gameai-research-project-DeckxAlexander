@@ -69,13 +69,8 @@ void AGOAPAIController::StartGOAP()
 
 void AGOAPAIController::ExecuteNext()
 {
-
 	CurrentAction = IdleAction;
-	
-	if (State["SeePlayer"] == true && !CanSeePlayer(m_PlayerCharacter))
-	{
-		State["SeePlayer"] = false;
-	}
+	if (State["SeePlayer"] == true && !CanSeePlayer(m_PlayerCharacter)) State["SeePlayer"] = false; //Check if player is still seen after action change
 	
 	if (!ActivePlan.IsEmpty())
 	{
