@@ -30,7 +30,6 @@ bool ActionPlanner::HasReachedGoal(const FWorldState& state, const FWorldState& 
 TArray<UGOAPAction*> ActionPlanner::PlanAStar(const FWorldState& start, const FWorldState& goal,
                                               const TArray<UGOAPAction*>& possibleActions)
 {
-	
 	TArray<FGoapNode> openSet;
 	
 	//Create StartNode
@@ -39,7 +38,6 @@ TArray<UGOAPAction*> ActionPlanner::PlanAStar(const FWorldState& start, const FW
 	startNode.GCost = 0.f;
 	startNode.HCost = Heuristic(start, goal);
 	startNode.RemainingActions = possibleActions;
-	
 	
 	openSet.Add(startNode);
 	
@@ -86,11 +84,7 @@ TArray<UGOAPAction*> ActionPlanner::PlanAStar(const FWorldState& start, const FW
 			childNode.Plan.Add(action);
 			
 			openSet.Add(childNode);
-			
-
 		}
-		
-		
 	}
 	
 	
