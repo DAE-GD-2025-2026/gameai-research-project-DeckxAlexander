@@ -17,6 +17,13 @@ This sequence is contingent on both the state of the world and the state of the 
 Each agent had multiple goals with dynamic priorities and a set of actions represented by C++ classes. Actions were continuously validated during planning and execution, since they could become invalid due to changes in the game world.
 Once a plan was completed, the agent selected a new goal.
 
+### Performance
+In F.E.A.R., GOAP introduced a major drawback: performance overhead. 
+Even the rats in the game used a GOAP-based AI system. 
+Their behavior didn’t account for the player’s location, meaning they continued planning and executing actions even when the player was far away.
+
+Also, since F.E.A.R. is a fast-paced shooter, the world state changed constantly. As a result, enemies often had to recalculate their action plans frequently, which became quite expensive.
+
 ---
 
 
@@ -175,6 +182,27 @@ The player is a purple cube controlled with the WASD keys.
 If the player dies, the agents return to their primary task of clearing hazards in the scene.
 
 ![Alarm Image](RepoImages/PlayerImage.png)
+
+---
+
+# 🕒 Future Improvements
+
+There are a couple of possible future improvements, such as:
+
+### Adding a dynamic goal-selection system based on world state and priorities
+
+At the moment, goals are manually assigned by the game mode or the developer. For more believable AI behavior, goals should adapt dynamically according to the current world state and changing priorities.
+
+### Implement a Finite State Machine (FSM)
+
+F.E.A.R. used an FSM integrated with its GOAP system. The FSM consisted of three states: Animate, Go To, and Use Smart Object. A similar approach could work very well for this project.
+
+### Create a system that makes the planner more performance friendly
+
+As mentioned earlier, F.E.A.R. experienced performance issues because constantly changing world states forced enemies to repeatedly recalculate their action plans. 
+A similar issue could arise in this project if the worldstates change more frequently. 
+
+Therefore, it would be beneficial to implement a system that ensures that the agents only recalculate their plans when its necessary.
 
 ---
 
