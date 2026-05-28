@@ -7,14 +7,14 @@
 # 📖 What is GOAP?
 
 **GOAP (Goal-Oriented Action Planning)** is a Stanford Research Institute Problem Solver that allows npc's to behave in a believable dynamic way. 
-Instead of following pre-scripted behaviours the agents make decisions based on goals they want to achieve during the game. Breaking down a complex task into a sequence of multiple actions.
-This sequence is contingent on both the state of the world and the state of the agent. Meaning that the actions of one agent might differ from the other.
+Instead of following scripted behaviours the agents make decisions based on goals they want to achieve during the game. Breaking down a complex task into a sequence of actions.
+This sequence is dependant on both the state of the world and the state of the agent. Meaning that the actions of one agent might differ from the other.
 
 ---
 
 ## 🔫 F.E.A.R.
 **First Encounter Assault Recon**, developed by Monolith Productions, was one of the earliest and most influential examples of GOAP in games. Instead of relying on a large FSM, agents dynamically calculated plans to achieve goals.
-Each agent had multiple goals with dynamic priorities and a set of actions represented by C++ classes. Actions were continuously validated during planning and execution, since they could become invalid due to changes in the game world.
+Each agent had multiple goals with dynamic priorities and a set of actions. Their action plans were continuously validated during planning and execution, since they could become invalid because of changes in the game world.
 Once a plan was completed, the agent selected a new goal.
 
 ### Performance
@@ -30,8 +30,8 @@ Also, since F.E.A.R. is a fast-paced shooter, the world state changed constantly
 # 🎮 Purpose of the Project
 
 The project demonstrates how GOAP can create believable AI without relying heavily on scripted behaviors. 
-Instead of using a large finite state machine or behavior tree, the program dynamically plans sequences of actions to achieve goals within the game world.
-The system is modular and highly customizable, making it an effective solution for creating intelligent NPCs in games.
+Instead of using a large finite state machine or behavior tree, the program plans sequences of actions to achieve goals within the game.
+The system is modular and highly customizable, making it a good solution for creating intelligent NPCs in games.
 
 Each AI agent has the following behaviour:
 - Clear hazards within the scene
@@ -50,7 +50,7 @@ In this implementation the state is a map of names and booleans.
 Based on these states the GOAP system generates a plan of **actions** to achieve a specific **goal**
 
 Individual states are updated by the actions and the controller, while world states are updated by the gamemode.
-Aside from this separation in responsibility, there is no major distinction between a world state and an individual state.
+Aside from this, there is no major distinction between a world state and an individual state.
 
 ### Examples (Individual states)
 - HasAmmo
@@ -64,8 +64,8 @@ Aside from this separation in responsibility, there is no major distinction betw
 
 ## 🧩 Goals
 
-A goal represents the objective the agent wants to achieve, or more specifically, the state the agent aims to reach.
-The planner creates a sequence of actions intended to transform the agent’s current state into the desired goal state.
+A goal represents the objective the agent wants to achieve, or more specifically, the state the agent wants to reach.
+The planner creates a sequence of actions intended to transform the agent’s current state into the goal state.
 
 ### Examples
 - PlayerAlive *false*
@@ -105,7 +105,7 @@ The Apply and ApplyFailed functions update the agent’s state based on the outc
 ## 🗒️ Planner
 
 The planner is the core system that drives the entire process.
-It calculates a sequence of actions by using an A* algorithm to determine the cheapest and most efficient plan for achieving the desired goal.
+It calculates a sequence of actions by using an A* algorithm to determine the most efficient plan for reaching the desired goal.
 
 The GOAP planner is an A* planner where each node contains a state, GCost, HCost, a plan, and a list of remaining actions. Since each action can only be performed once, actions are removed from the remaining action list after being used.
 
