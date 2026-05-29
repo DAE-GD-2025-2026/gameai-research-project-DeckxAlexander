@@ -191,18 +191,19 @@ There are a couple of possible future improvements, such as:
 
 ### Adding a dynamic goal-selection system based on world state and priorities
 
-At the moment, goals are manually assigned by the game mode or the developer. For more believable AI behavior, goals should adapt dynamically according to the current world state and changing priorities.
+At the moment, goals are manually assigned by the game mode or the developer. For more believable AI behavior, goals should change dynamically according to the current world state and changing priorities.
 
 ### Implement a Finite State Machine (FSM)
 
-F.E.A.R. used an FSM integrated with its GOAP system. The FSM consisted of three states: Animate, Go To, and Use Smart Object. A similar approach could work very well for this project.
+F.E.A.R. used an FSM with its GOAP system. The FSM consisted of three states: Animate, Go To, and Use Smart Object. A similar approach could work very well for this project.
 
 ### Create a system that makes the planner more performance friendly
 
-As mentioned earlier, F.E.A.R. experienced performance issues because constantly changing world states forced enemies to repeatedly recalculate their action plans. 
-A similar issue could arise in this project if the worldstates change more frequently. 
+As mentioned earlier, F.E.A.R. experienced performance issues because constantly changing world states forced enemies to frequently recalculate their action plans. 
+A similar issue could arise in this project if the worldstates change more. 
 
-Therefore, it would be beneficial to implement a system that ensures that the agents only recalculate their plans when its necessary.
+Therefore, it would be nice to implement a system that ensures that the agents only recalculate their plans when its absolutely necessary.
+Or, maybe a system that doesnt recalculate the entire plans but only certain parts of the plan.
 
 ---
 
